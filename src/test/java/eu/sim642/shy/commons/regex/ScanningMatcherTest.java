@@ -100,6 +100,21 @@ public class ScanningMatcherTest {
     }
 
     @Test
+    public void testNextResultString() throws Exception {
+        ScanningMatcher matcher = new ScanningMatcher("123abc");
+
+        MatchResult result123 = matcher.nextResult(DIGIT_PATTERN_STRING);
+        assertEquals(0, result123.start());
+        assertEquals(3, result123.end());
+        assertEquals("123", result123.group());
+
+        MatchResult resultabc = matcher.nextResult(ALPHA_PATTERN_STRING);
+        assertEquals(3, resultabc.start());
+        assertEquals(6, resultabc.end());
+        assertEquals("abc", resultabc.group());
+    }
+
+    @Test
     public void testNextResultGroups() throws Exception {
         ScanningMatcher matcher = new ScanningMatcher("123abc");
 
@@ -141,6 +156,14 @@ public class ScanningMatcherTest {
 
         assertNull(matcher.next(DIGIT_PATTERN));
         assertNull(matcher.next(ALPHA_PATTERN));
+    }
+
+    @Test
+    public void testNextString() throws Exception {
+        ScanningMatcher matcher = new ScanningMatcher("123abc");
+
+        assertEquals("123", matcher.next(DIGIT_PATTERN_STRING));
+        assertEquals("abc", matcher.next(ALPHA_PATTERN_STRING));
     }
 
     @Test
