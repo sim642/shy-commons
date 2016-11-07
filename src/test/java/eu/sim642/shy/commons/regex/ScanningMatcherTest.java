@@ -142,4 +142,20 @@ public class ScanningMatcherTest {
         assertNull(matcher.next(DIGIT_PATTERN));
         assertNull(matcher.next(ALPHA_PATTERN));
     }
+
+    @Test
+    public void testStringBuilder() throws Exception {
+        StringBuilder sb = new StringBuilder();
+        ScanningMatcher matcher = new ScanningMatcher(sb);
+
+        assertFalse(matcher.hasNext(DIGIT_PATTERN));
+
+        sb.append("123");
+        assertEquals("123", matcher.next(DIGIT_PATTERN));
+
+        sb.append("4");
+        assertEquals("4", matcher.next(DIGIT_PATTERN));
+
+        assertFalse(matcher.hasNext(DIGIT_PATTERN));
+    }
 }

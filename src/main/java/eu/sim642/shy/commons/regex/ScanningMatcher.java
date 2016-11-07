@@ -13,6 +13,11 @@ import java.util.regex.Pattern;
  */
 public class ScanningMatcher {
     /**
+     * Character sequence to scan.
+     */
+
+    private final CharSequence input;
+    /**
      * Matcher used underlying operations.
      */
     private final Matcher matcher;
@@ -22,6 +27,7 @@ public class ScanningMatcher {
      * @param input input character sequence
      */
     public ScanningMatcher(CharSequence input) {
+        this.input = input;
         matcher = Pattern.compile("").matcher(input); // empty pattern is a placeholder
     }
 
@@ -81,6 +87,7 @@ public class ScanningMatcher {
      */
     public boolean hasNext(Pattern pattern) {
         matcher.usePattern(pattern);
+        matcher.region(matcher.regionStart(), input.length()); // update region end if has shifted forward (StringBuilder)
         return matcher.lookingAt();
     }
 
