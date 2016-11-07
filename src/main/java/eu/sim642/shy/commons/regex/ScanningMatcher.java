@@ -87,7 +87,8 @@ public class ScanningMatcher {
      */
     public boolean hasNext(Pattern pattern) {
         matcher.usePattern(pattern);
-        matcher.region(matcher.regionStart(), input.length()); // update region end if has shifted forward (StringBuilder)
+        if (input instanceof Appendable)
+            matcher.region(matcher.regionStart(), input.length()); // update region end if has shifted forward (StringBuilder)
         return matcher.lookingAt();
     }
 
